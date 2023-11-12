@@ -5,7 +5,7 @@
 - stores high scores (local storage)
 
 1) Display start button 
-2) When 'START' button is clicked (addEventListener to the Start button)
+2) When 'START' button is clicked (addEventListener to the Start button) - FUNCTION for start of the quiz
   - timer starts (timers interval - 'setInterval')
   - first question appears ('addEventListener' - IF 'Start button' is 'CLICKED' display first question)
   (click event - pull the first question from the document.querySelector/getElementByID)
