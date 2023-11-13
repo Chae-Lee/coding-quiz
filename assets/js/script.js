@@ -30,14 +30,35 @@ Criteria of the overall Quiz
   -> when 'Clear High Scores' button is pressed (addEventListener for when this button is clicked, clear the score display)
 */
 
-//Array of answers 
+//Object/Array of Questions
+var questions = {
+  questionOne: "Commonly used data types DO NOT include: ", 
+  questionTwo:"The condition in an if/else statement is enclosed within _____. ", 
+  questionThree: "Arrays in JavaScript can be used to store____. ", 
+  questionFour: "String values must be enclosed within ____ when being assigned to variables.", 
+  questionFive: "A very useful tool used during development and debugging for printing content to the debugger is:  "
+};
 
-var questionOne = ['strings', 'boolean', 'numbers', 'alerts'];
-var questionTwo = ['quotes', 'curly brackets', 'parentheses', 
-'square brackets'];
-var questionThree = ['numbers and strings', 'other arrays', 'booleans', 'all of the above'];
-var questionFour = ['commas', 'curly brackets', 'quotes', 'parenthese'];
-var questionFive = ['JavaScript', 'terminal/bash', 'for loops', 'console.log'];
+//Object/Array of Answers 
+var answers = {
+  answerOne:['strings', 'boolean', 'numbers', 'alerts'], 
+  answerTwo : ['quotes', 'curly brackets', 'parentheses', 'square brackets'], 
+  answerThree :['numbers and strings', 'other arrays', 'booleans', 'all of the above'],
+  answerFour: ['commas', 'curly brackets', 'quotes', 'parenthese'], 
+  answerFive : ['JavaScript', 'terminal/bash', 'for loops', 'console.log']
+};
+
+var correctAnswer1 = answers.answerOne[3];
+var correctAnswer2 = answers.answerTwo [2];
+var correctAnswer3 = answers.answerThree[3];
+var correctAnswer4 = answers.answerFour [2];
+var correctAnswer5 = answers.answerFive [3];
+
+if (correctAnswer1 === "alerts") {
+  // move onto the next question 
+} else {
+  //10 seconds reduction on the timer 
+}
 
 //if/else statement - using array location eg. if questionOne[1] is the right answer then move onto next question 
 // else -> then subtract 10 seconds from the total time. 
