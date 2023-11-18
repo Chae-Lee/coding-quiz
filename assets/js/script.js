@@ -8,9 +8,10 @@ Criteria of the overall Quiz
 1) Display start button 
 2) When 'START' button is clicked (addEventListener to the Start button) - FUNCTION for start of the quiz
   -> timer starts (timers interval - 'setInterval')
-  -> first question appears ('addEventListener' - IF 'Start button' is 'CLICKED' display first question)
+  -> clear the initial start-screen 
+  -> first question with the multiple choice answers appear ('addEventListener' - IF 'Start button' is 'CLICKED' display first question)
   (click event - pull the first question from the document.querySelector/getElementByID)
-3) Questions (add questions into the HTML file)
+3) Questions (add questions into the HTML file from JS)
 -> these actions can be applied to the parent element (click, timer)
 -> if/else statement needs to be written for individual questions. (to identify which answer is correct)
   -> contains buttons for each answer (addEventListener)
@@ -30,38 +31,39 @@ Criteria of the overall Quiz
   -> when 'Clear High Scores' button is pressed (addEventListener for when this button is clicked, clear the score display)
 */
 
-//Object/Array of Questions
-var questions = {
-  questionOne: "Commonly used data types DO NOT include: ", 
-  questionTwo:"The condition in an if/else statement is enclosed within _____. ", 
-  questionThree: "Arrays in JavaScript can be used to store____. ", 
-  questionFour: "String values must be enclosed within ____ when being assigned to variables.", 
-  questionFive: "A very useful tool used during development and debugging for printing content to the debugger is:  "
-};
+//Array of objects - Questions & Answers
+var quiz = [
+  {
+    question:"Commonly used data types DO NOT include: ", 
+    choices: ['strings', 'boolean', 'numbers', 'alerts'],
+    correctAnswer:'alerts',
+    },
+  {
+    question: "The condition in an if/else statement is enclosed within _____. ", 
+    choices: ['quotes', 'curly brackets', 'parentheses', 'square brackets'], 
+    correctAnswer: 'parentheses',
+    },
+  {
+    question: "Arrays in JavaScript can be used to store____. ", 
+    choices: ['numbers and strings', 'other arrays', 'booleans', 'all of the above'],
+    correctAnswer: 'all of the above',
+    },
+  {
+    question: "String values must be enclosed within ____ when being assigned to variables.", 
+    choices: ['commas', 'curly brackets', 'quotes', 'parenthese'], 
+    correctAnswer: 'quotes',
+    },
+  {
+    question: "A very useful tool used during development and debugging for printing content to the debugger is:  ",
+    choices: ['JavaScript', 'terminal/bash', 'for loops', 'console.log'],
+    correctAnswer: 'console.log',
+    }]
+var results = 0;
 
-//Object/Array of Answers 
-var answers = {
-  answerOne:['strings', 'boolean', 'numbers', 'alerts'], 
-  answerTwo : ['quotes', 'curly brackets', 'parentheses', 'square brackets'], 
-  answerThree :['numbers and strings', 'other arrays', 'booleans', 'all of the above'],
-  answerFour: ['commas', 'curly brackets', 'quotes', 'parenthese'], 
-  answerFive : ['JavaScript', 'terminal/bash', 'for loops', 'console.log']
-};
-
-var correctAnswer1 = answers.answerOne[3];
-var correctAnswer2 = answers.answerTwo [2];
-var correctAnswer3 = answers.answerThree[3];
-var correctAnswer4 = answers.answerFour [2];
-var correctAnswer5 = answers.answerFive [3];
-
-if (correctAnswer1 === "alerts") {
-  // move onto the next question 
-} else {
-  //10 seconds reduction on the timer 
-}
-
-//if/else statement - using array location eg. if questionOne[1] is the right answer then move onto next question 
-// else -> then subtract 10 seconds from the total time. 
+// Timer function variables
+var timeEl = document.getElementsByClassName('timer')
+var countDownEl = document.getElementById ('time');
+var secondsLeft = 60;
 
 //Accessing the start button, adding function to startQuiz when button is clicked. 
 var startBtn = document.getElementById ('start');
@@ -69,6 +71,78 @@ startBtn.addEventListener ("click", startQuiz);
 
 // Function to start the quiz: when btn is clicked the first question appears. 
 function startQuiz (event){
-  console.log (event);
-  if (startBtn)
+
+  setTime();
+
+  //call function to display first question  & display array of answers 
+  for (var i = 0; i<quiz.length ; i++){
+    console.log (quiz[i].question);
+    var quizEl = document.getElementById ('questions');
+    document.textContent = 'quizEl';
+    console.log (quizEl);
+      for (var i=0; i<quiz.choices.length; i++){
+        var answerEl = document.getElementById ('choices');
+    
+      }}
+
+// need to clear the current text and display the question and answers 
+
 }
+
+/*
+something to display this to the page 
+for loop of the choices 
+choices make them into the button .setAttribute('type', 'button');
+if/else within that for loop of choices to the correctAnswer 
+*/
+
+
+// Function to make all the array of answers buttons 
+//or addEventListener for 'class= choices' from HTML as a clickable button 
+function makeButtons(button){
+  for (var i = 0 ; i<button.length; i++){
+
+  }
+}
+
+
+//Function to call questions 
+function displayingQuestions (){
+  for (var i = 0; i< questions.length; i++){
+    // get rid of the previous question 
+  document.textContent = questions.questionOne;
+  var qOne = answer.answerOne
+  // this if/else statement needs to go into a function for the first question (repeat for all 5 questions)
+  if (qOne === correctAnswer.answer1) {
+    // move onto the next question 
+  } else {
+    //10 seconds reduction on the timer 
+  }  }
+}
+
+
+
+
+// Timer Function - countdown begins when the button is clicked 
+
+function setTime (){
+  var timerInterval = setInterval (function(){
+    secondsLeft--;
+    countDownEl.textContent = secondsLeft 
+
+    if (secondsLeft=== 0) {
+      clearInterval(timerInterval);
+      endScreenMsg();
+    }
+  }, 1000);
+}
+
+//End Screen message pop up
+function endScreenMsg (){
+
+}
+
+//if/else statement - using array location eg. if questionOne[1] is the right answer then move onto next question 
+// else -> then subtract 10 seconds from the total time. 
+
+// Function to clear the previous question and show the next question + answers when the right answer is clicked 
