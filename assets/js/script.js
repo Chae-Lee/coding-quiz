@@ -61,70 +61,27 @@ var quiz = [
 var results = 0;
 
 // Timer function variables
-var timeEl = document.getElementsByClassName('timer')
 var countDownEl = document.getElementById ('time');
-var secondsLeft = 60;
+var secondsLeft = 100;
 
+console.log (quiz);
+console.log (quiz[0].question);
+console.log (quiz[0].choices);
+console.log (quiz[0].correctAnswer);
 //Accessing the start button, adding function to startQuiz when button is clicked. 
 var startBtn = document.getElementById ('start');
+var startScreenEl = document.getElementById ('start-screen');
+var questionsEl = document.getElementById ('questions');
+
 startBtn.addEventListener ("click", startQuiz);
 
 // Function to start the quiz: when btn is clicked the first question appears. 
-function startQuiz (event){
-
+function startQuiz (){
   setTime();
-
-  //call function to display first question  & display array of answers 
-  for (var i = 0; i<quiz.length ; i++){
-    console.log (quiz[i].question);
-    var quizEl = document.getElementById ('questions');
-    document.textContent = 'quizEl';
-    console.log (quizEl);
-      for (var i=0; i<quiz.choices.length; i++){
-        var answerEl = document.getElementById ('choices');
-    
-      }}
-
-// need to clear the current text and display the question and answers 
-
+  displayQuestions ();
 }
-
-/*
-something to display this to the page 
-for loop of the choices 
-choices make them into the button .setAttribute('type', 'button');
-if/else within that for loop of choices to the correctAnswer 
-*/
-
-
-// Function to make all the array of answers buttons 
-//or addEventListener for 'class= choices' from HTML as a clickable button 
-function makeButtons(button){
-  for (var i = 0 ; i<button.length; i++){
-
-  }
-}
-
-
-//Function to call questions 
-function displayingQuestions (){
-  for (var i = 0; i< questions.length; i++){
-    // get rid of the previous question 
-  document.textContent = questions.questionOne;
-  var qOne = answer.answerOne
-  // this if/else statement needs to go into a function for the first question (repeat for all 5 questions)
-  if (qOne === correctAnswer.answer1) {
-    // move onto the next question 
-  } else {
-    //10 seconds reduction on the timer 
-  }  }
-}
-
-
-
 
 // Timer Function - countdown begins when the button is clicked 
-
 function setTime (){
   var timerInterval = setInterval (function(){
     secondsLeft--;
@@ -136,6 +93,64 @@ function setTime (){
     }
   }, 1000);
 }
+
+
+//Function to call questions 
+function displayQuestions (){
+  var quizEl = document.getElementById ('question-title');
+  var answerBtn = document.getElementById ('choices');
+
+  function showQuestion(e){
+    quizEl.textContent = quiz[e].question;
+    answerBtn.innterHTML= ' ';
+  }
+// Creating answer buttons
+  for (var i =0; i<quiz[i].choices.length; i++){
+    var buttonEl = document.createElement ('button');
+    buttonEl.textContent = quiz[i].choices[i];
+    buttonEl.addEventListener('click', function(event){
+      checkAnswer(event,index);
+    })
+  }
+    }
+  
+
+  answerBtn.addEventListener ('click', function (e){
+    console.log (e);
+    for (var i=0; i< quiz.length; i++){
+      var answersEl = document.createElement ('li');
+      answersEl.textContent = quiz.choices;
+      buttonEl.append (answersEl);
+    }
+
+  })
+
+
+  //call function to display first question  & display array of answers 
+  for (var i = 0; i<quiz.length ; i++){
+    console.log (quiz[i].question);
+    // changeText.textContent = quiz[i].question;
+    // quizEl.textContent = quiz.choices;
+    // answerEl.textContent = quiz.choices;
+    // console.log (answerEl);
+
+      for (var i=0; i<quiz.length; i++){ //for loop for the answers
+        answerEl.textContent = quiz.choices;
+        console.log (answerEl);
+      }}
+
+
+
+// REMEMBER to append buttonEl to div/id= choices
+
+/*
+something to display this to the page 
+for loop of the choices 
+choices make them into the button .setAttribute('type', 'button');
+if/else within that for loop of choices to the correctAnswer 
+*/
+
+
 
 //End Screen message pop up
 function endScreenMsg (){
