@@ -64,19 +64,22 @@ var results = 0;
 // console.log (quiz[0].question);
 // console.log (quiz[0].choices);
 // console.log (quiz[0].correctAnswer);
+// console.log (quiz.length);
 
 // Timer function variables
 var countDownEl = document.getElementById ('time');
-var secondsLeft = 100;
+var secondsLeft = 60;
 
-// Variables
+// Global Variables
 var startBtn = document.getElementById ('start');
 var startScreenEl = document.getElementById ('start-screen');
 var questionsEl = document.getElementById ('questions');
 var quizEl = document.getElementById ('question-title');
 var choicesBtn = document.getElementById ('choices');
 var feedbackEl = document.getElementById ('feedback');
+var endScreenEl = document.getElementById ('end-screen');
 var questionIndex = 0;
+var timerInterval;
 
 
 //Accessing the start button, adding function to startQuiz when button is clicked. 
@@ -91,7 +94,7 @@ function startQuiz (){
 
 // Timer Function - countdown begins when the button is clicked 
 function setTime (){
-  var timerInterval = setInterval (function(){
+  timerInterval = setInterval (function(){
     secondsLeft--;
     countDownEl.textContent = secondsLeft 
 
@@ -102,81 +105,69 @@ function setTime (){
   }, 1000);
 }
 
-//Function to call questions 
+//Function to display questions
 function displayQuestions (){
-  questionsEl.classList.remove('hide');
-  choicesBtn.classList.remove ('hide');
+  if (questionIndex < quiz.length){
+      questionsEl.classList.remove('hide');
+      choicesBtn.classList.remove ('hide');
 
-  var currentQuestion = quiz[questionIndex];
-  quizEl.textContent = currentQuestion.question;
-  choicesBtn.innerHTML = '';
+      var currentQuestion = quiz[questionIndex];
+      quizEl.textContent = currentQuestion.question;
+      choicesBtn.innerHTML = '';
+    // Iterating through answer choices and creating buttons for each array of answers
+      currentQuestion.choices.forEach (function(choice, i){
+        console.log (choice);
+        var buttonEl = document.createElement ('button');
+        buttonEl.setAttribute ('value', choice);
+        buttonEl.textContent = choice;
+    // Adding a click function to the choice buttons 
+        buttonEl.addEventListener ('click', function (){
+          clickAnswer (choice);
+        })
+        choicesBtn.appendChild (buttonEl);
+      });
+    }
+  }
 
-  currentQuestion.choices.forEach (function(choice, i){
-    console.log (choice);
-    var buttonEl = document.createElement ('button');
-    buttonEl.setAttribute ('value', choice);
-    buttonEl.textContent = choice;
-    buttonEl.addEventListener ('click', function (){
-      clickAnswer (choice);
-    })
-    choicesBtn.appendChild (buttonEl);
-  })
-
-}
-
-// Correct Answer Function 
-
+// Function to iterate through questions & answers and respond appropriately when answer is clicked
 function clickAnswer (selectedAnswer){
+  console.log (selectedAnswer); //selectedAnswers are pulling the choices that are selected from the buttonEl click function
   if (selectedAnswer !== quiz[questionIndex].correctAnswer){
-    secondsLeft -= 10; // shorthand secondsLeft -= 10; secondsLeft =secondsLeft - 10; 
+    secondsLeft = secondsLeft - 10;
     feedbackEl.classList.remove ('hide');
     feedbackEl.textContent = "Please try again!";
     countDownEl.textContent = secondsLeft; 
   } else {
     feedbackEl.classList.remove ('hide');
-    feedbackEl.textContent = "Correct Answer!"; // This message is not showing 
-    // figure out why it's reducing time
+    feedbackEl.textContent = "Correct Answer!"; 
     questionIndex++
     displayQuestions ();
+  }
+
+  if (questionIndex >=  quiz.length){
+    clearInterval (timerInterval);
+    endScreenMsg ();
+  } else {
+
   }
 }
 console.log (quiz[questionIndex].correctAnswer);
 
+//End Screen message pop up
+function endScreenMsg (){
+questionsEl.classList.add ('hide');
+choicesBtn.classList.add ('hide');
+feedbackEl.classList.add ('hide');
+endScreenEl.classList.remove ('hide');
+var finalScoreEl = document.getElementById ('final-score');
+finalScoreEl.textContent = "Your Final Score is " + secondsLeft;
+}
 
+function logScores (){
+  var initialEl = document.getElementById('initials');
+  var submitBtn = ducoment.getElementById ('submit');
+  submitBtn.addEventListener ('click', function (){
+    
+  })
+}
 
-  // //call function to display first question  & display array of answers 
-  // for (var i = 0; i<quiz.length ; i++){
-  //   console.log (quiz[i].question);
-  //   changeText.textContent = quiz[i].question;
-  //   quizEl.textContent = quiz.choices;
-  //   answerEl.textContent = quiz.choices;
-  //   console.log (answerEl);
-
-  //     for (var i=0; i<quiz.length; i++){ //for loop for the answers
-  //       answerEl.textContent = quiz.choices;
-  //       console.log (answerEl);
-  //     }}
-
-
-
-// REMEMBER to append buttonEl to div/id= choices
-
-/*
-something to display this to the page 
-for loop of the choices 
-choices make them into the button .setAttribute('type', 'button');
-if/else within that for loop of choices to the correctAnswer 
-*/
-
-
-
-// //End Screen message pop up
-// function endScreenMsg (){
-
-
-// }
-
-// //if/else statement - using array location eg. if questionOne[1] is the right answer then move onto next question 
-// // else -> then subtract 10 seconds from the total time. 
-
-// // Function to clear the previous question and show the next question + answers when the right answer is clicked 
