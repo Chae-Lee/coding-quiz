@@ -78,6 +78,8 @@ var quizEl = document.getElementById ('question-title');
 var choicesBtn = document.getElementById ('choices');
 var feedbackEl = document.getElementById ('feedback');
 var endScreenEl = document.getElementById ('end-screen');
+var initialEl = document.getElementById('initials');
+var submitBtn = document.getElementById ('submit');
 var questionIndex = 0;
 var timerInterval;
 
@@ -163,10 +165,8 @@ var finalScoreEl = document.getElementById ('final-score');
 finalScoreEl.textContent = "Your Final Score is " + secondsLeft;
 }
 
+//High score list 
 var scoreLists = JSON.parse(localStorage.getItem('scores')) || [];
-
-var initialEl = document.getElementById('initials');
-var submitBtn = document.getElementById ('submit');
 submitBtn.addEventListener ('click', function (){
   var scoreObj = {
     initials: initialEl.value,
