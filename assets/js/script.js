@@ -64,19 +64,24 @@ var results = 0;
 var countDownEl = document.getElementById ('time');
 var secondsLeft = 100;
 
-console.log (quiz);
-console.log (quiz[0].question);
-console.log (quiz[0].choices);
-console.log (quiz[0].correctAnswer);
+// console.log (quiz);
+// console.log (quiz[0].question);
+// console.log (quiz[0].choices);
+// console.log (quiz[0].correctAnswer);
 //Accessing the start button, adding function to startQuiz when button is clicked. 
 var startBtn = document.getElementById ('start');
 var startScreenEl = document.getElementById ('start-screen');
 var questionsEl = document.getElementById ('questions');
+var quizEl = document.getElementById ('question-title');
+var choicesBtn = document.getElementById ('choices');
+var feedbackEl = document.getElementById ('feedback');
+var currentQuestionIndex = 0;
 
 startBtn.addEventListener ("click", startQuiz);
 
 // Function to start the quiz: when btn is clicked the first question appears. 
 function startQuiz (){
+  startScreenEl.classList.add ('hide');
   setTime();
   displayQuestions ();
 }
@@ -94,50 +99,59 @@ function setTime (){
   }, 1000);
 }
 
-
 //Function to call questions 
 function displayQuestions (){
-  var quizEl = document.getElementById ('question-title');
-  var answerBtn = document.getElementById ('choices');
+  questionsEl.classList.remove('hide');
+  choicesBtn.classList.remove ('hide');
 
-  function showQuestion(e){
-    quizEl.textContent = quiz[e].question;
-    answerBtn.innterHTML= ' ';
-  }
-// Creating answer buttons
-  for (var i =0; i<quiz[i].choices.length; i++){
+  var currentQuestion = quiz[currentQuestionIndex];
+  quizEl.textContent = currentQuestion.question;
+  choicesBtn.innerHTML = '';
+
+  currentQuestion.choices.forEach (function(choice, i){
+    console.log (choice);
     var buttonEl = document.createElement ('button');
-    buttonEl.textContent = quiz[i].choices[i];
-    buttonEl.addEventListener('click', function(event){
-      checkAnswer(event,index);
-    })
-  }
-    }
-  
-
-  answerBtn.addEventListener ('click', function (e){
-    console.log (e);
-    for (var i=0; i< quiz.length; i++){
-      var answersEl = document.createElement ('li');
-      answersEl.textContent = quiz.choices;
-      buttonEl.append (answersEl);
-    }
-
+    buttonEl.setAttribute ('value', choice);
+    buttonEl.textContent = choice;
+    choicesBtn.appendChild (buttonEl);
+    choicesBtn.onclick = clickAnswer;
   })
 
+}
 
-  //call function to display first question  & display array of answers 
-  for (var i = 0; i<quiz.length ; i++){
-    console.log (quiz[i].question);
-    // changeText.textContent = quiz[i].question;
-    // quizEl.textContent = quiz.choices;
-    // answerEl.textContent = quiz.choices;
-    // console.log (answerEl);
+// Correct Answer Function 
 
-      for (var i=0; i<quiz.length; i++){ //for loop for the answers
-        answerEl.textContent = quiz.choices;
-        console.log (answerEl);
-      }}
+function clickAnswer (){
+  if (this.value !== quiz[currentQuestionIndex].correctAnswer){
+    secondsLeft -= 10; // shorthand secondsLeft -= 10; secondsLeft =secondsLeft - 10; 
+    feedbackEl.classList.remove ('hide');
+    feedbackEl.textContent = "Please try again!"
+    countDownEl.textContent = secondsLeft; 
+  } else {
+    feedbackEl.classList.remove ('hide');
+    feedbackEl.textContent = "Correct Answer!"
+    // figure out why it's reducing time
+    currentQuestionIndex++
+    displayQuestions ();
+  }
+}
+console.log (quiz[currentQuestionIndex].correctAnswer);
+
+
+
+
+  // //call function to display first question  & display array of answers 
+  // for (var i = 0; i<quiz.length ; i++){
+  //   console.log (quiz[i].question);
+  //   changeText.textContent = quiz[i].question;
+  //   quizEl.textContent = quiz.choices;
+  //   answerEl.textContent = quiz.choices;
+  //   console.log (answerEl);
+
+  //     for (var i=0; i<quiz.length; i++){ //for loop for the answers
+  //       answerEl.textContent = quiz.choices;
+  //       console.log (answerEl);
+  //     }}
 
 
 
@@ -152,12 +166,13 @@ if/else within that for loop of choices to the correctAnswer
 
 
 
-//End Screen message pop up
-function endScreenMsg (){
+// //End Screen message pop up
+// function endScreenMsg (){
 
-}
 
-//if/else statement - using array location eg. if questionOne[1] is the right answer then move onto next question 
-// else -> then subtract 10 seconds from the total time. 
+// }
 
-// Function to clear the previous question and show the next question + answers when the right answer is clicked 
+// //if/else statement - using array location eg. if questionOne[1] is the right answer then move onto next question 
+// // else -> then subtract 10 seconds from the total time. 
+
+// // Function to clear the previous question and show the next question + answers when the right answer is clicked 
