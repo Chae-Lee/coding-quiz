@@ -60,23 +60,26 @@ var quiz = [
     }]
 var results = 0;
 
-// Timer function variables
-var countDownEl = document.getElementById ('time');
-var secondsLeft = 100;
-
 // console.log (quiz);
 // console.log (quiz[0].question);
 // console.log (quiz[0].choices);
 // console.log (quiz[0].correctAnswer);
-//Accessing the start button, adding function to startQuiz when button is clicked. 
+
+// Timer function variables
+var countDownEl = document.getElementById ('time');
+var secondsLeft = 100;
+
+// Variables
 var startBtn = document.getElementById ('start');
 var startScreenEl = document.getElementById ('start-screen');
 var questionsEl = document.getElementById ('questions');
 var quizEl = document.getElementById ('question-title');
 var choicesBtn = document.getElementById ('choices');
 var feedbackEl = document.getElementById ('feedback');
-var currentQuestionIndex = 0;
+var questionIndex = 0;
 
+
+//Accessing the start button, adding function to startQuiz when button is clicked. 
 startBtn.addEventListener ("click", startQuiz);
 
 // Function to start the quiz: when btn is clicked the first question appears. 
@@ -104,7 +107,7 @@ function displayQuestions (){
   questionsEl.classList.remove('hide');
   choicesBtn.classList.remove ('hide');
 
-  var currentQuestion = quiz[currentQuestionIndex];
+  var currentQuestion = quiz[questionIndex];
   quizEl.textContent = currentQuestion.question;
   choicesBtn.innerHTML = '';
 
@@ -113,30 +116,31 @@ function displayQuestions (){
     var buttonEl = document.createElement ('button');
     buttonEl.setAttribute ('value', choice);
     buttonEl.textContent = choice;
+    buttonEl.addEventListener ('click', function (){
+      clickAnswer (choice);
+    })
     choicesBtn.appendChild (buttonEl);
-    choicesBtn.onclick = clickAnswer;
   })
 
 }
 
 // Correct Answer Function 
 
-function clickAnswer (){
-  if (this.value !== quiz[currentQuestionIndex].correctAnswer){
+function clickAnswer (selectedAnswer){
+  if (selectedAnswer !== quiz[questionIndex].correctAnswer){
     secondsLeft -= 10; // shorthand secondsLeft -= 10; secondsLeft =secondsLeft - 10; 
     feedbackEl.classList.remove ('hide');
-    feedbackEl.textContent = "Please try again!"
+    feedbackEl.textContent = "Please try again!";
     countDownEl.textContent = secondsLeft; 
   } else {
     feedbackEl.classList.remove ('hide');
-    feedbackEl.textContent = "Correct Answer!"
+    feedbackEl.textContent = "Correct Answer!"; // This message is not showing 
     // figure out why it's reducing time
-    currentQuestionIndex++
+    questionIndex++
     displayQuestions ();
   }
 }
-console.log (quiz[currentQuestionIndex].correctAnswer);
-
+console.log (quiz[questionIndex].correctAnswer);
 
 
 
