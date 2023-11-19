@@ -40,7 +40,7 @@ The questions, multiple choices and the correct answer is stored in an array of 
 ## The final deployed application should look like this
 
 <b> URL to the deployed Application </b>
-
+https://chae-lee.github.io/coding-quiz/ 
 
 
 ![Multiple Quiz Question GIF](./assets/images/Coding%20Quiz.gif)
