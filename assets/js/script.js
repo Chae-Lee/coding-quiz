@@ -163,11 +163,16 @@ var finalScoreEl = document.getElementById ('final-score');
 finalScoreEl.textContent = "Your Final Score is " + secondsLeft;
 }
 
-function logScores (){
-  var initialEl = document.getElementById('initials');
-  var submitBtn = ducoment.getElementById ('submit');
-  submitBtn.addEventListener ('click', function (){
-    
-  })
-}
+var scoreLists = JSON.parse(localStorage.getItem('scores')) || [];
 
+var initialEl = document.getElementById('initials');
+var submitBtn = document.getElementById ('submit');
+submitBtn.addEventListener ('click', function (){
+  var scoreObj = {
+    initials: initialEl.value,
+    score: secondsLeft,
+  }
+  scoreLists.push (scoreObj);
+  localStorage.setItem("scores", JSON.stringify(scoreLists));
+  location.href = "highscores.html";
+})
